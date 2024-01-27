@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     public Player[] players;
 
-    public List<string> mp3FilePaths = new List<string>();
+    public List<string> mp3FilePaths;
 
 
 
@@ -39,7 +39,6 @@ public class PlayerManager : MonoBehaviour
         System.Random rnd = new System.Random();
         mp3FilePaths = mp3FilePaths.OrderBy(x => rnd.Next()).ToList();
 
-        initPlayers(3);
 
     }
 

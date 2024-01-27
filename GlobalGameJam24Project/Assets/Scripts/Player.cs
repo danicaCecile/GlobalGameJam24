@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         AudioManager.clip = audioClips[i];
         AudioManager.Play();
 
+
     }
 
     private void InitSounds()
@@ -93,10 +94,10 @@ public class Player : MonoBehaviour
     void Start()
     {
 
-        InitSounds();
         AudioManager = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>();
         mp3FilePaths = GameObject.Find("Players").GetComponent<PlayerManager>().mp3FilePaths;
-        
+        InitSounds();
+
     }
 
 }

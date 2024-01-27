@@ -817,7 +817,6 @@ GameObject:
   - component: {fileID: 595440522}
   - component: {fileID: 595440521}
   - component: {fileID: 595440520}
-  - component: {fileID: 595440523}
   m_Layer: 5
   m_Name: Sound1
   m_TagString: Untagged
@@ -889,19 +888,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 595440521}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &595440521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,28 +927,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595440518}
   m_CullTransparentMesh: 1
---- !u!223 &595440523
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595440518}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1001 &781584456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2294,7 +2259,6 @@ GameObject:
   - component: {fileID: 1958370260}
   - component: {fileID: 1958370259}
   - component: {fileID: 1958370258}
-  - component: {fileID: 1958370257}
   m_Layer: 5
   m_Name: Submit
   m_TagString: Untagged
@@ -2323,28 +2287,6 @@ RectTransform:
   m_AnchoredPosition: {x: 525, y: 150}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &1958370257
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958370255}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!114 &1958370258
 MonoBehaviour:
   m_ObjectHideFlags: 0
