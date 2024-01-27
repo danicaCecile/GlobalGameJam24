@@ -7,9 +7,12 @@ using UnityEngine.UI;
 public class roundManager : MonoBehaviour
 {
 
+    private AudioClip[] selectedClips;
+
     private PlayerManager playerManager;
 
     public Button sound1, sound2, sound3, sound4, sound5, submit;
+
 
     private int currentPlayer;
     public int CurrentPlayer
@@ -51,7 +54,7 @@ public class roundManager : MonoBehaviour
         if(CurrentPlayer <= playerManager.players.Length - 1)
         {
 
-
+            selectedClips[currentPlayer] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
 
             CurrentPlayer = CurrentPlayer + 1;
 
@@ -111,6 +114,8 @@ public class roundManager : MonoBehaviour
 
 
         playerManager.initPlayers(3);
+
+        selectedClips = new AudioClip[playerManager.players.Length];
 
         CurrentPlayer = 0;
 
