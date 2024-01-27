@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
 
     public AudioClip[] audioClips;
 
+    public int lastClip;
 
 
 
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
 
         AudioManager.clip = audioClips[i];
         AudioManager.Play();
+        lastClip = i;
 
 
     }

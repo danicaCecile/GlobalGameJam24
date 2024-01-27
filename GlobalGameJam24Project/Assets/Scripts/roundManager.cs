@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class roundManager : MonoBehaviour
     private AudioClip[] selectedClips;
 
     private PlayerManager playerManager;
+
+    private TextMeshProUGUI playerNumDisplay;
 
     public Button sound1, sound2, sound3, sound4, sound5, submit;
 
@@ -24,11 +27,13 @@ public class roundManager : MonoBehaviour
             currentPlayer = value;
 
             UpdateSoundButtons(currentPlayer);
+
+            playerNumDisplay.text = (currentPlayer + 1).ToString();
         
         }
     }
 
-
+    
     private void UpdateSoundButtons(int newPlayer)
     {
         sound1.onClick.RemoveAllListeners();
@@ -51,10 +56,12 @@ public class roundManager : MonoBehaviour
     public void Submit()
     {
 
-        if(CurrentPlayer <= playerManager.players.Length - 1)
+
+        if(CurrentPlayer < playerManager.players.Length - 1)
         {
 
             selectedClips[currentPlayer] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            playerManager.players[currentPlayer].ReplaceSound(playerManager.players[currentPlayer].lastClip);
 
             CurrentPlayer = CurrentPlayer + 1;
 
@@ -62,17 +69,29 @@ public class roundManager : MonoBehaviour
         else
         {
 
-            Debug.Log("GAME OVER");
+            Debug.Log("GAME END");
+            SelectWinner();
 
         }
 
     }
+
+
+    private void SelectWinner()
+    {
+
+
+
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
 
         playerManager = GameObject.Find("Players").GetComponent<PlayerManager>();
+        playerNumDisplay = GameObject.Find("PlayerNumberValue").GetComponent<TMPro.TextMeshProUGUI>();
+
 
         if (sound1 == null)
         {
