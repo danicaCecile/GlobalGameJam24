@@ -11,10 +11,12 @@ public class TextScroll : MonoBehaviour
 
     private bool isGoingUp = false;
     private bool isGoingDown = false;
+    private Vector3 startingPosition;
 
     void Start()
     {
         text = gameObject.transform.GetComponent<RectTransform>();
+        startingPosition = text.anchoredPosition;
     }
 
     void FixedUpdate()
@@ -54,6 +56,6 @@ public class TextScroll : MonoBehaviour
 
     public void resetYPos()
     {
-        text.anchoredPosition = new Vector2(text.anchoredPosition.x, minY);
+        text.anchoredPosition = startingPosition;
     }
 }
