@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class ScreenController : MonoBehaviour
 {
+    public float delay = 0f;
+
     public void DeactivateScreen(GameObject screen)
     {
-        screen.SetActive(false);
+        StartCoroutine(Activate(false, screen));
     }
 
     public void ActivateScreen(GameObject screen)
     {
-        screen.SetActive(true);
+        StartCoroutine(Activate(true, screen));
+    }
+
+    private IEnumerator Activate(bool isActive, GameObject screen)
+    {
+        yield return new WaitForSeconds(delay);
+        screen.SetActive(isActive);
     }
 }
