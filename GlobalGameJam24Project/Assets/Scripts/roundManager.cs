@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class roundManager : MonoBehaviour
 {
 
+    private Sprite[] sprites;
     private AudioClip[] selectedClips;
+    private int[] selectedClipsOwners;
     private int selectedClipsi;
 
     private PlayerManager playerManager;
@@ -90,9 +92,12 @@ public class roundManager : MonoBehaviour
 
     private TextMeshProUGUI playerNumDisplay;
 
+    private Image imageComponent;
+
     //FINAL PICKING CANVAS
     public GameObject finalPickCanvas;
     private Button player1, player2, player3, player4, player5, submitWinner;
+
 
 
     //END CANVAS
@@ -228,6 +233,9 @@ public class roundManager : MonoBehaviour
         roundDisplay = GameObject.Find("RoundNumberValuePicking").GetComponent<TMPro.TextMeshProUGUI>();
         itPlayerDisplay = GameObject.Find("ItPlayerValuePicking").GetComponent<TMPro.TextMeshProUGUI>();
 
+        imageComponent = GameObject.Find("ImagePick").GetComponent<Image>();
+        assigneRandomImage();
+
         if (roundDisplay != null)
         {
 
@@ -261,6 +269,7 @@ public class roundManager : MonoBehaviour
         }
 
         selectedClips = new AudioClip[playerManager.players.Length];
+        selectedClipsOwners = new int[playerManager.players.Length];
         selectedClipsi = 0;
 
         CurrentPlayer = 0;
@@ -295,6 +304,7 @@ public class roundManager : MonoBehaviour
         {
 
             selectedClips[selectedClipsi] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            selectedClipsOwners[selectedClipsi] = currentPlayer;
             selectedClipsi++;
             playerManager.players[currentPlayer].ReplaceSound(playerManager.players[currentPlayer].lastClip);
 
@@ -308,6 +318,7 @@ public class roundManager : MonoBehaviour
         {
 
             selectedClips[selectedClipsi] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            selectedClipsOwners[selectedClipsi] = currentPlayer;
             selectedClipsi++;
             playerManager.players[currentPlayer].ReplaceSound(playerManager.players[currentPlayer].lastClip);
             startFinalPickRound();
@@ -356,6 +367,11 @@ public class roundManager : MonoBehaviour
 
         roundDisplay = GameObject.Find("RoundNumberValueFinal").GetComponent<TMPro.TextMeshProUGUI>();
         itPlayerDisplay = GameObject.Find("ItPlayerValueFinal").GetComponent<TMPro.TextMeshProUGUI>();
+
+        Sprite temp = imageComponent.sprite;
+
+        imageComponent = GameObject.Find("ImageFinal").GetComponent<Image>();
+        imageComponent.sprite = temp;
 
         if (roundDisplay != null)
         {
@@ -411,6 +427,7 @@ public class roundManager : MonoBehaviour
         if (CurrentRound < int.Parse(roundNumSelector.text) - 1)
         {
 
+            playerManager.players[selectedClipsOwners[lastPlayedClip]].Score++;
 
             CurrentRound = CurrentRound + 1;
             itPlayer = (itPlayer + 1) % playerManager.players.Length;
@@ -455,8 +472,24 @@ public class roundManager : MonoBehaviour
 
     
 
+    public void assigneRandomImage()
+    {
 
+        // Check if there are any sprites loaded
+        if (sprites.Length > 0)
+        {
+            // Generate a random index to select a random sprite
+            int randomIndex = Random.Range(0, sprites.Length);
 
+            // Set the randomly selected sprite to the UI Image component
+            imageComponent.sprite = sprites[randomIndex];
+        }
+        else
+        {
+            Debug.LogError("No sprites found in the specified folder: " + Application.dataPath + "/Resources/Images/");
+        }
+
+    }
 
 
     // Start is called before the first frame update
@@ -466,6 +499,11 @@ public class roundManager : MonoBehaviour
         startGameStart();
         CurrentRound = 1;
         itPlayer = 0;
+
+        // Load sprites from the specified folder one by one
+        sprites = Resources.LoadAll<Sprite>("Images");
+
+
 
     }
 
