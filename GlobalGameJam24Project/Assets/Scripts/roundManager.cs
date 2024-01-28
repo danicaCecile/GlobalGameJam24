@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -480,6 +481,13 @@ public class roundManager : MonoBehaviour
             i++;
         }
         playerWins.displayWinningPlayer(highestIndex);
+
+        AudioClip outro = Resources.Load<AudioClip>("Songs/WhistleOutro");
+
+        GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip = outro;
+        GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().loop = true;
+        GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().Play();
+
     }
 
     

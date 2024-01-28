@@ -22,10 +22,10 @@ public class titlefadeinaudio : MonoBehaviour
 
         AudioSource = GameObject.Find("Audio").GetComponent<AudioSource>();
 
-        audio1 = Resources.Load<AudioClip>("testMp3s/Intro1");
-        audio2 = Resources.Load<AudioClip>("testMp3s/Intro2");
-        audio3 = Resources.Load<AudioClip>("testMp3s/Intro3");
-        audio4 = Resources.Load<AudioClip>("testMp3s/Intro4");
+        audio1 = Resources.Load<AudioClip>("Songs/Intro1");
+        audio2 = Resources.Load<AudioClip>("Songs/Intro2");
+        audio3 = Resources.Load<AudioClip>("Songs/Intro3");
+        audio4 = Resources.Load<AudioClip>("Songs/Intro4");
 
         title1 = GameObject.Find("TitleAnimation");
         title2 = GameObject.Find("TitleAnimation2");
