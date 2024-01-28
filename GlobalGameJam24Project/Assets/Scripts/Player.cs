@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     public AudioSource AudioManager;
 
-    private int score = 0;
+    public int score = 0;
     public int Score
     {
         get { return score; }
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
             {
                 AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
                 audioClips[index] = clip;
-                Debug.Log("Loaded AudioClip: " + clip.name);
+                //Debug.Log("Loaded AudioClip: " + clip.name);
             }
             else
             {

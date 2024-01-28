@@ -458,12 +458,27 @@ public class roundManager : MonoBehaviour
     }
 
 
+    public PlayerWins playerWins;
+
     public void startWinnerScreen()
     {
+        int i = 0;
+        int highestIndex = 0;
+        int highestScore = 0;
 
         finalPickCanvas.SetActive(false);
         winnerCanvas.SetActive(true);
-
+        
+        foreach(Player player in playerManager.players){
+            if(player.Score > highestScore){
+                Debug.Log(player.Score);
+                highestScore = player.Score;
+                highestIndex = i;
+                Debug.Log(highestIndex);
+            }
+            i++;
+        }
+        playerWins.displayWinningPlayer(highestIndex);
     }
 
     

@@ -10,11 +10,10 @@ public class PlayerWins : MonoBehaviour
 
     void Start()
     {
-        displayWinningPlayer(4);
     }
 
     public void displayWinningPlayer(int winningPlayerID)
     {
-        numbers[winningPlayerID-1].SetActive(true);
+        numbers[winningPlayerID].SetActive(true);
     }
 }
