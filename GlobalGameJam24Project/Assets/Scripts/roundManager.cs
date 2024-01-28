@@ -155,7 +155,7 @@ public class roundManager : MonoBehaviour
 
     public void incrementPlayerCount()
     {
-        if (int.Parse(playerNumSelector.text) < 5)
+        if (int.Parse(playerNumSelector.text) < 6)
         {
             playerNumSelector.text = (int.Parse(playerNumSelector.text) + 1).ToString();
         }
@@ -239,7 +239,7 @@ public class roundManager : MonoBehaviour
         if (roundDisplay != null)
         {
 
-            roundDisplay.text = currentRound.ToString();
+            roundDisplay.text = CurrentRound.ToString();
 
         }
 
@@ -261,7 +261,7 @@ public class roundManager : MonoBehaviour
             playerManager = GameObject.Find("Players").GetComponent<PlayerManager>();
         }
 
-        if (currentRound == 1)
+        if (CurrentRound == 1)
         {
 
             playerManager.initPlayers(int.Parse(playerNumSelector.text));
@@ -376,7 +376,7 @@ public class roundManager : MonoBehaviour
         if (roundDisplay != null)
         {
 
-            roundDisplay.text = currentRound.ToString();
+            roundDisplay.text = CurrentRound.ToString();
 
         }
 
@@ -424,7 +424,7 @@ public class roundManager : MonoBehaviour
     public void submitWinnerEvent()
     {
 
-        if (CurrentRound < int.Parse(roundNumSelector.text) - 1)
+        if (CurrentRound < int.Parse(roundNumSelector.text))
         {
 
             playerManager.players[selectedClipsOwners[lastPlayedClip]].Score++;
@@ -438,6 +438,7 @@ public class roundManager : MonoBehaviour
         else
         {
 
+            playerManager.players[selectedClipsOwners[lastPlayedClip]].Score++;
 
             startWinnerScreen();
 
