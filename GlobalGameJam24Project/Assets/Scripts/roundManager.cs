@@ -9,10 +9,27 @@ public class roundManager : MonoBehaviour
 {
 
     private AudioClip[] selectedClips;
+    private int selectedClipsi;
 
     private PlayerManager playerManager;
 
 
+    private int lastPlayedClip;
+    private int itPlayer;
+
+
+    private int currentRound;
+    public int CurrentRound
+    {
+        get { return currentRound; }
+        set
+        {
+
+            currentRound = value;
+
+
+        }
+    }
 
 
     private int currentPlayer;
@@ -22,16 +39,44 @@ public class roundManager : MonoBehaviour
         set
         {
 
-            currentPlayer = value;
+            if (value == itPlayer)
+            {
 
-            UpdateSoundButtons(currentPlayer);
+                if(value+1 >= playerManager.players.Length)
+                {
 
-            playerNumDisplay.text = (currentPlayer + 1).ToString();
+                    startFinalPickRound();
+
+
+                }
+                else
+                {
+                    currentPlayer = value + 1;
+
+                    UpdateSoundButtons(currentPlayer);
+
+                    playerNumDisplay.text = (currentPlayer + 1).ToString();
+                }
+
+            }
+            else{
+
+
+                currentPlayer = value;
+
+                UpdateSoundButtons(currentPlayer);
+
+                playerNumDisplay.text = (currentPlayer + 1).ToString();
+
+            }
+
+
+
 
         }
     }
 
-
+    private TextMeshProUGUI roundDisplay, itPlayerDisplay;
 
     //GAME START CANVAS
     public GameObject gameStartCanvas;
@@ -48,6 +93,7 @@ public class roundManager : MonoBehaviour
     //FINAL PICKING CANVAS
     public GameObject finalPickCanvas;
     private Button player1, player2, player3, player4, player5, submitWinner;
+
 
     //END CANVAS
     public GameObject winnerCanvas;
@@ -142,6 +188,7 @@ public class roundManager : MonoBehaviour
     {
 
         gameStartCanvas.SetActive(false);
+        finalPickCanvas.SetActive(false);
         soundPickCanvas.SetActive(true);
 
         ///////////////////////////////////////////
@@ -178,9 +225,24 @@ public class roundManager : MonoBehaviour
         }
 
         playerNumDisplay = GameObject.Find("PlayerNumberValue").GetComponent<TMPro.TextMeshProUGUI>();
+        roundDisplay = GameObject.Find("RoundNumberValuePicking").GetComponent<TMPro.TextMeshProUGUI>();
+        itPlayerDisplay = GameObject.Find("ItPlayerValuePicking").GetComponent<TMPro.TextMeshProUGUI>();
 
+        if (roundDisplay != null)
+        {
 
+            roundDisplay.text = currentRound.ToString();
 
+        }
+
+        if (itPlayerDisplay != null)
+        {
+
+            itPlayerDisplay.text = (itPlayer + 1).ToString();
+
+        }
+
+        submit.onClick.RemoveAllListeners();
         submit.onClick.AddListener(() => Submit());
 
 
@@ -191,36 +253,21 @@ public class roundManager : MonoBehaviour
             playerManager = GameObject.Find("Players").GetComponent<PlayerManager>();
         }
 
+        if (currentRound == 1)
+        {
 
-        playerManager.initPlayers(3);
+            playerManager.initPlayers(int.Parse(playerNumSelector.text));
+
+        }
 
         selectedClips = new AudioClip[playerManager.players.Length];
+        selectedClipsi = 0;
 
         CurrentPlayer = 0;
 
     }
 
-    public void startFinalPickRound()
-    {
 
-        soundPickCanvas.SetActive(false);
-        finalPickCanvas.SetActive(true);
-
-    }
-
-    public void startWinnerScreen()
-    {
-
-        finalPickCanvas.SetActive(false);
-        winnerCanvas.SetActive(true);
-
-    }
-
-    
-
-
-
-    
     private void UpdateSoundButtons(int newPlayer)
     {
         sound1.onClick.RemoveAllListeners();
@@ -244,24 +291,170 @@ public class roundManager : MonoBehaviour
     {
 
 
-        if(CurrentPlayer < playerManager.players.Length - 1)
+        if (CurrentPlayer < playerManager.players.Length - 1)
         {
 
-            selectedClips[currentPlayer] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            selectedClips[selectedClipsi] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            selectedClipsi++;
             playerManager.players[currentPlayer].ReplaceSound(playerManager.players[currentPlayer].lastClip);
 
+
             CurrentPlayer = CurrentPlayer + 1;
+
+
 
         }
         else
         {
 
-            Debug.Log("GAME END");
+            selectedClips[selectedClipsi] = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>().clip;
+            selectedClipsi++;
+            playerManager.players[currentPlayer].ReplaceSound(playerManager.players[currentPlayer].lastClip);
+            startFinalPickRound();
 
 
         }
 
     }
+
+
+    public void startFinalPickRound()
+    {
+
+        soundPickCanvas.SetActive(false);
+        finalPickCanvas.SetActive(true);
+
+        if (player1 == null)
+        {
+            player1 = GameObject.Find("FinalSound1").GetComponent<Button>();
+        }
+
+        if (player2 == null)
+        {
+            player2 = GameObject.Find("FinalSound2").GetComponent<Button>();
+        }
+
+        if (player3 == null)
+        {
+            player3 = GameObject.Find("FinalSound3").GetComponent<Button>();
+        }
+
+        if (player4 == null)
+        {
+            player4 = GameObject.Find("FinalSound4").GetComponent<Button>();
+        }
+
+        if (player5 == null)
+        {
+            player5 = GameObject.Find("FinalSound5").GetComponent<Button>();
+        }
+
+        if (submitWinner == null)
+        {
+            submitWinner = GameObject.Find("SubmitWinner").GetComponent<Button>();
+        }
+
+        roundDisplay = GameObject.Find("RoundNumberValueFinal").GetComponent<TMPro.TextMeshProUGUI>();
+        itPlayerDisplay = GameObject.Find("ItPlayerValueFinal").GetComponent<TMPro.TextMeshProUGUI>();
+
+        if (roundDisplay != null)
+        {
+
+            roundDisplay.text = currentRound.ToString();
+
+        }
+
+        if (itPlayerDisplay != null)
+        {
+
+            itPlayerDisplay.text = (itPlayer + 1).ToString();
+
+        }
+
+        player1.onClick.RemoveAllListeners();
+        player1.onClick.AddListener(() => playFinalSound(0));
+
+        player2.onClick.RemoveAllListeners();
+        player2.onClick.AddListener(() => playFinalSound(1));
+
+        if (playerManager.players.Length >= 4)
+        {
+            player3.onClick.RemoveAllListeners();
+            player3.onClick.AddListener(() => playFinalSound(2));
+        }
+        else { player3.gameObject.SetActive(false); }
+
+        if (playerManager.players.Length >= 5)
+        {
+            player4.onClick.RemoveAllListeners();
+            player4.onClick.AddListener(() => playFinalSound(3));
+        }
+        else { player4.gameObject.SetActive(false); }
+
+        if (playerManager.players.Length >= 6)
+        {
+            player5.onClick.RemoveAllListeners();
+            player5.onClick.AddListener(() => playFinalSound(4));
+        }
+        else { player5.gameObject.SetActive(false); }
+
+
+        submitWinner.onClick.RemoveAllListeners();
+        submitWinner.onClick.AddListener(() => submitWinnerEvent());
+
+    }
+
+
+    public void submitWinnerEvent()
+    {
+
+        if (CurrentRound < int.Parse(roundNumSelector.text) - 1)
+        {
+
+
+            CurrentRound = CurrentRound + 1;
+            itPlayer = (itPlayer + 1) % playerManager.players.Length;
+            startSoundPickRounds();
+
+
+        }
+        else
+        {
+
+
+            startWinnerScreen();
+
+
+        }
+
+    }
+
+
+    public void playFinalSound(int i)
+    {
+
+        AudioSource AudioManager = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>();
+        AudioManager.clip = selectedClips[i];
+        AudioManager.Play();
+        lastPlayedClip = i;
+
+    }
+
+
+    public void startWinnerScreen()
+    {
+
+        finalPickCanvas.SetActive(false);
+        winnerCanvas.SetActive(true);
+
+    }
+
+    
+
+
+
+    
+
 
 
 
@@ -271,6 +464,8 @@ public class roundManager : MonoBehaviour
     {
 
         startGameStart();
+        CurrentRound = 1;
+        itPlayer = 0;
 
     }
 
