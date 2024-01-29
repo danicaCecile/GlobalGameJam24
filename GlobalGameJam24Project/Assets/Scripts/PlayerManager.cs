@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     public Player[] players;
 
-    public List<string> mp3FilePaths;
+    public List<AudioClip> mp3Clips;
 
 
 
@@ -32,12 +32,8 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
 
-        // Get all .mp3 file paths from the resources folder
-        mp3FilePaths = Directory.GetFiles(Application.dataPath + "/Resources/testMp3s", "*.mp3").ToList();
 
-        // Shuffle the array to randomize the selection
-        System.Random rnd = new System.Random();
-        mp3FilePaths = mp3FilePaths.OrderBy(x => rnd.Next()).ToList();
+        mp3Clips = Resources.LoadAll<AudioClip>("testMp3s").ToList();
 
 
     }

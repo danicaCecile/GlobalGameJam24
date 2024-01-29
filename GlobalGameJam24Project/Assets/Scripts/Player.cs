@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
 
 
-    public List<string> mp3FilePaths;
+    public List<AudioClip> mp3Clips;
 
 
 
@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
         AudioManager.clip = audioClips[i];
         AudioManager.Play();
         lastClip = i;
-
 
     }
 
@@ -53,10 +52,10 @@ public class Player : MonoBehaviour
 
     public void ReplaceSound(int index)
     {
-        int randomIndex = Random.Range(0, mp3FilePaths.Count - 1);
-        string filePath = "file://" + mp3FilePaths[randomIndex]; // Unity requires "file://" prefix for local files
-        StartCoroutine(LoadRandomAudioClip(filePath, index));
-        mp3FilePaths.RemoveAt(randomIndex);
+        int randomIndex = Random.Range(0, mp3Clips.Count - 1);
+
+        audioClips[index] = mp3Clips[randomIndex];
+
 
     }
 
@@ -64,40 +63,22 @@ public class Player : MonoBehaviour
     {
 
         // Load a random .mp3 file into each index of the AudioClip array
-        for (int i = 0; i < numberOfClips && i < mp3FilePaths.Count; i++)
+        for (int i = 0; i < numberOfClips && i < mp3Clips.Count; i++)
         {
-            string filePath = "file://" + mp3FilePaths[i]; // Unity requires "file://" prefix for local files
-            StartCoroutine(LoadRandomAudioClip(filePath, i));
-            mp3FilePaths.RemoveAt(i);
+
+            audioClips[i] = mp3Clips[i];
+            mp3Clips.RemoveAt(i);
         }
 
     }
 
-    IEnumerator LoadRandomAudioClip(string filePath, int index)
-    {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(filePath, AudioType.MPEG))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
-                audioClips[index] = clip;
-                //Debug.Log("Loaded AudioClip: " + clip.name);
-            }
-            else
-            {
-                Debug.LogError("Failed to load AudioClip from path: " + filePath + ", Error: " + www.error);
-            }
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
     {
 
         AudioManager = GameObject.Find("Audio Clip Player").GetComponent<AudioSource>();
-        mp3FilePaths = GameObject.Find("Players").GetComponent<PlayerManager>().mp3FilePaths;
+        mp3Clips = GameObject.Find("Players").GetComponent<PlayerManager>().mp3Clips;
         InitSounds();
 
     }
